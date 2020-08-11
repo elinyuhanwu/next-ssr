@@ -8,7 +8,7 @@ This is a server side rendering project for myself.
 
 ### Mainly Purpose
 1. Practice with Next.js api.
-2. get more clear concept about SSR VS CSR and how they work.
+2. Ｇet more clear concept about SSR VS CSR and how they work.
 
 ### Todo List
 1.  👨🏻‍🚀  Architecture 👩🏻‍🚀

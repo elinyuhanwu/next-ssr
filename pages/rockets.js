@@ -1,33 +1,45 @@
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 
-const Rockets = (props) => {
+const Rockets = ({ rockets }) => {
+  console.log('ROCKETS', rockets);
   return (
-    <div>
+    <div 
+      style={{ 
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '30px'
+      }}>
       <h1>Rockets Data</h1>
       <Link href='/'>
         <button>Home</button>
       </Link>
-      <div>
-        {props.rockets.map(rocket => {
-          <div key={rocket.id} style={{color: 'red', fontSize: '14px'}}>
-            <Link href={`rockets/${rocket.id}`}>
-              <a>{rocket.name}</a>
-            </Link>            
-            {rocket.description}
-          </div>
-        })}
-      </div>
+      {rockets.map(rocket => {
+         return (
+           <div key={rocket.id}>
+             <h3>{rocket.rocket_name}</h3>
+             <p>{rocket.description}</p>
+             <div 
+              style={{
+                display: 'flex',
+                overflowX: 'auto'
+              }}>
+               {rocket.flickr_images.map(img => <img width='300' src={img} style={{padding: '10px'}} />)}
+             </div>
+           </div>
+         )
+      })}
     </div>
   )
 }
 
-Rockets.getInitialProps = async function() {
-  const res = await fetch('https://api.spacexdata.com/v4/rockets');
+export async function getStaticProps(context) {
+  const res = await fetch('https://api.spacexdata.com/v3/rockets?limit=10');
   const data = await res.json();
-  console.log('DATA', data);
   return {
-    rockets: data
+    props: {
+      rockets: data
+    }
   }
 }
 
